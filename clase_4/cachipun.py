@@ -25,30 +25,33 @@ print("player choose: " + playerChoose)
 # 0 > 2 == true
 # 2 > 1 == true
 # 1 > 0 == true
-
-win = ""
-if playerChooseId == 0 and iaChoose == 2:
+try:
+    chooses.index(playerChoose)
+    if playerChooseId == 0 and iaChoose == 2:
     # win player
-    win = "player"
-if iaChoose == 0 and playerChooseId == 2:
+        win = "player"
+    if iaChoose == 0 and playerChooseId == 2:
     #win ia
-    win = "ia"
+        win = "ia"
 
-if playerChooseId == 2 and iaChoose == 1:
+    if playerChooseId == 2 and iaChoose == 1:
     # win player
-    win = "player"
-if iaChoose == 2 and playerChooseId == 1:
-    #win ia
-    win = "ia"
+        win = "player"
+    if iaChoose == 2 and playerChooseId == 1:
+        #win ia
+        win = "ia"
 
-if playerChooseId == 1 and iaChoose == 0:
-    # win player
-    win = "player"
-if iaChoose == 1 and playerChooseId == 0:
-    #win ia
-    win = "ia"
-if iaChoose == playerChooseId:
-    #win empate
-    win = "empate"
+    if playerChooseId == 1 and iaChoose == 0:
+        # win player
+        win = "player"
+    if iaChoose == 1 and playerChooseId == 0:
+        #win ia
+        win = "ia"
+    if iaChoose == playerChooseId:
+        #win empate
+        win = "empate"
+    print("the winner of the match is: {}".format(win))
+except:
+    print("debe ingresar piedra, papel o tijera")
 
-print("the winner of the match is: {}".format(win))
+
