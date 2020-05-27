@@ -1,7 +1,7 @@
 import sys
 import random
 
-playerChoose = sys.argv[1]
+playerChoose = sys.argv[1].lower()
 
 chooses = ["tijera", "roca", "papel"]
 
