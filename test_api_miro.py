@@ -3,7 +3,7 @@ import requests
 import sys
 
 #auth_code = "Bearer {}".format(sys.argv[1])
-auth_code = "Bearer e8747311-77ea-43f4-b880-1794331c84ad"
+auth_code = ""
 board_id = "o9J_krVvvXs="
 resource = "boards/{}/widgets/".format(board_id)
 
