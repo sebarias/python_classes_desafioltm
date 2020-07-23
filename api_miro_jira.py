@@ -5,7 +5,7 @@ import re
 
 #variables globales
 board_id = "o9J_krUi7fI="
-dict_colors = {"#ff9d48":"front","#ea94bb":"backend","#b384bb":"QA","#67c6c0":"story","#f5d128":"gestion"}
+dict_colors = {"#23bfe7":"front","#ff9d48":"backend","#f16c7f":"QA","#fff9b1":"story","#d5f692":"task"}
 stories = []
 project_jira = "17602"
 dict_task_type ={5: "Sub-Task", 3 : "Task", 10000 : "Epic", 100001 : "Story", 1 : "Bug"}
@@ -18,7 +18,7 @@ def mostrar_menu(saldo = 0):
     print('-' * 20)
     print('1) Obtener data de miró')
     print('2) Transforamr data de miró a Jira')
-    print('3) Enviar data a Jira')
+    print('3) Enviar data a Jira cuando las HU ya existen')
     print('4) Salir')
     print()
 
@@ -106,9 +106,12 @@ while opt_menu != '4':
 
     if opt_menu == '1':
         auth_miro = input('ingrese autorización de miro: ')
+        auth_jira = input("Ingrese auth de jira: ")
         resource = "boards/{}/widgets/".format(board_id)
         response = request_to_miro(resource)
+        
         data = response["data"]
+        
         story_names = []
         #filtro usando filter sobre data, para sacar solo los elementos de tipo "frame" y  que tengan hijos.
 
@@ -125,29 +128,39 @@ while opt_menu != '4':
             if(len(dt["children"]) > 0):
                 for child in dt["children"]:
                     story["children"][child] = return_stikers_data(data, child)
-            print(story)
+            print("story: ", story)
             print("/n")
             stories.append(story)
     elif opt_menu == '2':
-        auth_jira = input("Ingrese auth de jira: ")
+        #auth_jira = input("Ingrese auth de jira: ")
         if(len(stories) > 0):
-            print("creando historias")
-            rs = push_story_onjira(stories[2])
-            print(rs)
-            id = rs["id"]
-            rs2 = push_subtask_onjira(id, stories[2])
-            print(rs2)
-            # for story in stories:
-            #     rs = push_story_onjira(story)
-            #     print(rs)
-            #     id = rs["id"]
-            #     rs2 = push_subtask_onjira(id, story)
-            #     print(rs2)
+            # print("creando historias")
+            # rs = push_story_onjira(stories[2])
+            # print(rs)
+            # id = rs["id"]
+            # rs2 = push_subtask_onjira(id, stories[2])2
+            # print(rs2)
+            
+            
+            for story in stories:
+                print(story['title'])
+                #  rs = push_story_onjira(story)
+                #  print(rs)
+                #  id = rs["id"]
+                #  rs2 = push_subtask_onjira(id, story)
+                #  print(rs2)
         else:
             print("no hay historias que crear.")
     elif opt_menu == '3':
+        #si las hu estan creadas en jira, en el nombre del frame colocar el id de jira.
         print(3)
+        for story in stories:
+            #print(story['title'])
+            id = story['title']
+            rs2 = push_subtask_onjira(id, story)
+            print(rs2, "\n")
         
+
     elif opt_menu == '4':
         print('Saliendo')
     else:
